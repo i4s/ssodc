@@ -7,10 +7,10 @@ Daemon::Daemon()
   struct sigaction terminate_action;
   sigset_t terminate_set;
   terminate_action.sa_flags = 0;
-  sigemptyset(&terminate_set);
   sigemptyset(&terminate_action.sa_mask);
-  sigaddset(&terminate_set, SIGHUP);
-  sigprocmask(SIG_BLOCK, &terminate_set, 0);
+  sigfillset(&terminate_set);
+  sigdelset(&terminate_set, SIGTERM);
+  sigprocmask(SIG_SETMASK, &terminate_set, 0);
   terminate_action.sa_handler = &TerminateHandler;
   sigaction(SIGTERM, &terminate_action, 0);
 }
