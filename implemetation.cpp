@@ -1,61 +1,109 @@
 #include "header.hpp"
 
-int get_origin(string)
+int get_origin(std::string str)
 {
-  return 0;
+    std::cout << "\"get_origin\" output: ";
+    std::cout << str;
+    std::cout << std::endl;
+
+    return 0;
 }
 
-int get_type(string)
+int get_type(std::string str)
 {
-  return 0;
+    std::cout << "\"get_type\" output: ";
+    std::cout << str;
+    std::cout << std::endl;
+
+    return 0;
 }
 
-int put_alert(int origin, int type, string json_subkey)
+int put_alert(int origin, int type, std::string json_subkey)
 {
-  return 0;
+    std::cout << "\"put_alert\" output: ";
+    std::cout << origin << " " << type << " " << json_subkey;
+    std::cout << std::endl;
+
+    return 0;
 }
 
-int get_alert(int origin, int type, string json_subkey)
+int get_alert(int origin, int type, std::string json_subkey)
 {
-  return 0;
+    std::cout << "\"get_alert\" output: ";
+    std::cout << origin << " " << type << " " << json_subkey;
+    std::cout << std::endl;
+
+    return 0;
 }
 
 int get_alerts(int origin, int type)
 {
-  return 0;
+    std::cout << "\"get_alerts\" output: ";
+    std::cout << origin << " " << type;
+    std::cout << std::endl;
+
+    return 0;
 }
 
 int get_alerts(int origin)
 {
-  return 0;
+    std::cout << "\"get_alerts\" output: ";
+    std::cout << origin;
+    std::cout << std::endl;
+
+    return 0;
 }
 
-int remove_alert(int origin, int type, string json_subkey)
+int remove_alert(int origin, int type, std::string json_subkey)
 {
-  return 0;
+    std::cout << "\"remove_alert\" output: ";
+    std::cout << origin << " " << type << " " << json_subkey;
+    std::cout << std::endl;
+
+    return 0;
 }
 
 int remove_alerts(int origin, int type)
 {
-  return 0;
+    std::cout << "\"remove_alerts\" output: ";
+    std::cout << origin << " " << type;
+    std::cout << std::endl;
+
+    return 0;
 }
 
 int remove_alerts(int origin)
 {
-  return 0;
+    std::cout << "\"remove_alerts\" output: ";
+    std::cout << origin;
+    std::cout << std::endl;
+
+    return 0;
 }
 
 int clear_alert(int key)
 {
-  return 0;
+    std::cout << "\"clear_alert\" output: ";
+    std::cout << key;
+    std::cout << std::endl;
+
+    return 0;
 }
 
-int save_alert(int origin, int type, string json_subkey)
+int save_alert(int origin, int type, std::string json_subkey)
 {
-  return 0;
+    std::cout << "\"save_alert\" output: ";
+    std::cout << origin << " " << type << " " << json_subkey;
+    std::cout << std::endl;
+
+    return 0;
 }
 
-int ignore_alert(int origin, int type, string json_subkey, time_t ignore_time)
+int ignore_alert(int origin, int type, std::string json_subkey, time_t ignore_time)
 {
-  return 0;
+    std::cout << "\"ignore_alert\" output: ";
+    std::cout << origin << " " << type << " " << json_subkey;
+    std::cout << std::endl;
+
+    return 0;
 }
