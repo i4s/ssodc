@@ -1,15 +1,17 @@
 #ifndef SSODC_DIVIDER_DIVIDER_H_
 #define SSODC_DIVIDER_DIVIDER_H_
 
-#include "daemon.h"
+#include "../utils/daemon.h"
+#include "../ipc/supermq.h"
+#include <string>
 
 class Divider : public Daemon
 {
- public:
-  Divider();
-  ~Divider();
+public:
+    Divider();
+    ~Divider();
 
-  int Daemonize();
+    int Daemonize();
 };
 
 #endif //SSODC_DIVIDER_DIVIDER_H_

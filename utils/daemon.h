@@ -8,17 +8,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-class Daemon 
+class Daemon
 {
- protected:
-  static bool terminate;
- public:
-  Daemon();
-  ~Daemon();
+protected:
+    static bool terminate;
+public:
+    Daemon();
+    ~Daemon();
 
-  virtual int Daemonize();
- private:
-  static void TerminateHandler(int);
+    virtual int Daemonize();
+private:
+    static void TerminateHandler(int);
 };
 
 #endif //SSODC_DIVIDER_DAEMON_H_
