@@ -15,8 +15,7 @@ int Divider::Daemonize()
     {
         SuperMQ smq;
         std::string message;
-        smq.Listen(6900, message);
-        break;
+        smq.Receive(6900, message);
     }
     return 0;
 }

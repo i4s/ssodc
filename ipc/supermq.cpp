@@ -7,30 +7,12 @@ SuperMQ::SuperMQ() : SocketConnection::SocketConnection()
 
 SuperMQ::SuperMQ(int port) : SocketConnection::SocketConnection()
 {
-    if(SocketConnection::Create() == -1)
-    {
-        //TODO ERROR
-    }
-    if(SocketConnection::Bind(port) == -1)
-    {
-        //TODO ERROR
-    }
-    if(SocketConnection::Listen() == -1)
-    {
-        //TODO ERROR
-    }
+    Listen(port);
 }
 
 SuperMQ::SuperMQ(std::string host, int port) : SocketConnection::SocketConnection()
 {
-    if(SocketConnection::Create() == -1)
-    {
-        //TODO ERROR
-    }
-    if(SocketConnection::Connect(host, port) == -1)
-    {
-        //TODO ERROR
-    }
+    Connect(host, port);
 }
 
 SuperMQ::~SuperMQ()
@@ -51,23 +33,29 @@ int SuperMQ::Connect(const std::string& host, int port)
     return 0;
 }
 
-int SuperMQ::Receive(int port, std::string& data)
+int SuperMQ::Listen(int port)
 {
     if(SocketConnection::Create() == -1)
     {
         //TODO ERROR
+        return -1;
     }
     if(SocketConnection::Bind(port) == -1)
     {
         //TODO ERROR
+        return -1;
     }
     if(SocketConnection::Listen() == -1)
     {
         //TODO ERROR
+        return -1;
     }
-    SuperMQ client;
-    Accept(client);
-    if(client.Recv(data) == -1)
+    return 0;
+}
+
+int SuperMQ::Receive(int port, std::string& data)
+{
+    if(Listen(port) == -1 || Receive(data) == -1)
     {
         //TODO ERROR
         return -1;

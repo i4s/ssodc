@@ -14,6 +14,7 @@ public:
     int Connect(const std::string&, int);
     int Receive(int, std::string&);
     int Receive(std::string&);
+    int Listen(int);
     int Send(std::string&) const;
     void Accept(SuperMQ&);
 };
