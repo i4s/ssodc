@@ -16,4 +16,4 @@ private:
 }
 }
 
-#endif //SSODC_DIVIDER_DAEMON_HPP_
+#endif //SSODC_UTILS_DAEMON_HPP_
