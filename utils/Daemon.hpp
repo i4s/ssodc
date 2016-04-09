@@ -1,9 +1,8 @@
-#ifndef SSODC_DIVIDER_DAEMON_H_
-#define SSODC_DIVIDER_DAEMON_H_
+#ifndef SSODC_UTILS_DAEMON_HPP_
+#define SSODC_UTILS_DAEMON_HPP_
 
 namespace ssodc {
 namespace utils {
-
 class daemon {
 protected:
     static bool m_terminate;
@@ -17,4 +16,4 @@ private:
 }
 }
 
-#endif //SSODC_DIVIDER_DAEMON_H_
+#endif //SSODC_DIVIDER_DAEMON_HPP_
