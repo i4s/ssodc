@@ -5,25 +5,25 @@
 
 namespace ssodc {
 namespace utils {
-	
+
 class taskinfo {
 private:
-	unsigned int m_id;
-	unsigned int m_type;
-	std::string m_datapath;
-	std::string m_codepath;
+    unsigned int m_id;
+    unsigned int m_type;
+    std::string m_datapath;
+    std::string m_codepath;
 public:
-	taskinfo();
-	taskinfo(int, int, std::string, std::string);
-	taskinfo(const taskinfo&);
-	~taskinfo();
+    taskinfo();
+    taskinfo(int, int, std::string, std::string);
+    taskinfo(const taskinfo&);
+    ~taskinfo();
 
-	taskinfo& operator=(const taskinfo&);
-	unsigned int getId();
-	unsigned int getType();
-	std::string getDataPath();
-	std::string getCodePath();
-	int getCodePath(std::string&);
+    taskinfo& operator=(const taskinfo&);
+    unsigned int getId();
+    unsigned int getType();
+    std::string getDataPath();
+    std::string getCodePath();
+    int getCodePath(std::string&);
 };
 }
 }

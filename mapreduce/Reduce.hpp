@@ -11,20 +11,20 @@ namespace mapreduce {
 
 class reduce {
 private:
-	taskinfo m_taskInfo;
-	std::string m_solutionPath;
-	//Contains id of part of input data and path to this part
-	std::map<unsigned int, std::string> m_partPath;
-	//Contains id of part of input data and coordinates to fold it
-	std::map<unsigned int, std::vector<int> > m_partOfWhole;
+    taskinfo m_taskInfo;
+    std::string m_solutionPath;
+    //Contains id of part of input data and path to this part
+    std::map<unsigned int, std::string> m_partPath;
+    //Contains id of part of input data and coordinates to fold it
+    std::map<unsigned int, std::vector<int> > m_partOfWhole;
 public:
-	reduce(taskinfo&);
-	~reduce();
+    reduce(taskinfo&);
+    ~reduce();
 
-	int foldData() = 0;
-	std::string getSolutionPath();
-	int setPartPath(std::map<unsigned int, std::string>&);
-	int setPartOfWhole(std::map<unsigned int, std::vector<int> >&);
+    int foldData() = 0;
+    std::string getSolutionPath();
+    int setPartPath(std::map<unsigned int, std::string>&);
+    int setPartOfWhole(std::map<unsigned int, std::vector<int> >&);
 };
 }
 }
