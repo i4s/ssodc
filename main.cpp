@@ -1,8 +1,7 @@
-#include "utils/Daemon.hpp"
+#include "Daemon.hpp"
 
 int main()
 {
-    ssodc::utils::daemon map;
-    map.daemonize();
+	ssodc::utils::Daemon* daemon;
     return 0;
 }

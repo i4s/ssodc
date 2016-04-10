@@ -3,15 +3,16 @@
 
 namespace ssodc {
 namespace utils {
-class daemon {
+class Daemon {
 protected:
     static bool m_terminate;
 public:
-    daemon();
-    ~daemon();
-    virtual int daemonize();
+    Daemon();
+    ~Daemon();
+    virtual int Run() = 0;
+    int Start();
 private:
-    static void terminateHandler(int);
+    static void TerminateHandler(int);
 };
 }
 }
