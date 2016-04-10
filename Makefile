@@ -4,6 +4,9 @@
 #flags
   CFLAGS = -g -Wall -pedantic
 
+#include
+  UTILS = -Iutils
+
 default: Main
 
 Main: Daemon.o Main.o
@@ -13,7 +16,7 @@ Daemon.o: utils/Daemon.hpp utils/Daemon.cpp
 	$(CC) $(CFLAGS) -c utils/Daemon.cpp
 
 Main.o: main.cpp
-	$(CC) $(CFLAGS) -c main.cpp
+	$(CC) $(CFLAGS) -c $(UTILS) main.cpp
 
 clean:
 	rm Main *.o

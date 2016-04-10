@@ -8,9 +8,9 @@
 namespace ssodc {
 namespace utils {
 
-bool daemon::m_terminate = false;
+bool Daemon::m_terminate;
 
-daemon::daemon() {
+Daemon::Daemon() {
     struct sigaction terminateAction;
     sigset_t terminateSet;
     terminateAction.sa_flags = 0;
@@ -18,18 +18,8 @@ daemon::daemon() {
     sigfillset(&terminateSet);
     sigdelset(&terminateSet, SIGTERM);
     sigprocmask(SIG_SETMASK, &terminateSet, 0);
-    terminateAction.sa_handler = &terminateHandler;
+    terminateAction.sa_handler = &TerminateHandler;
     sigaction(SIGTERM, &terminateAction, 0);
-}
-
-daemon::~daemon() {
-}
-
-void daemon::terminateHandler(int i) {
-    m_terminate = true;
-}
-
-int daemon::daemonize() {
     pid_t pid = fork();
     // TODO: Change this stuff, when exception model will be implemented
     exit(pid > 0 ? EXIT_SUCCESS : EXIT_FAILURE);
@@ -42,6 +32,17 @@ int daemon::daemonize() {
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
+}
+
+Daemon::~Daemon() {
+}
+
+void Daemon::TerminateHandler(int i) {
+    m_terminate = true;
+}
+
+int Daemon::Start() {
+    Run();
     return 0;
 }
 
