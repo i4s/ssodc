@@ -5,7 +5,7 @@ namespace database_controller {
 
 base_sql_connection::base_sql_connection()
 {
-	this->db_name = "dbname=testdb ";
+    this->db_name = "dbname=testdb ";
     this->user_name = " user=";
     this->user_password = " password=";
     this->hostaddr = " hostaddr=";
@@ -36,6 +36,7 @@ base_sql_connection::base_sql_connection(std::string user_name, std::string user
             //TODO: log system error(log sql server error)
             //TODO: subalert system error(send sql server error)
         }
+        exit(EXIT_FAILURE);
     }
     catch(const std::exception &e)
     {
@@ -70,6 +71,7 @@ void base_sql_connection::create_user(std::string user_name, std::string user_pa
             //TODO: log system error(log sql server error)
             //TODO: subalert system error(send sql server error)
         }
+        exit(EXIT_FAILURE);
     }
     catch(const std::exception &e)
     {
@@ -105,6 +107,7 @@ void base_sql_connection::create_table(std::string table_charact)
             //TODO: log system error(log sql server error)
             //TODO: subalert system error(send sql server error)
         }
+        exit(EXIT_FAILURE);
     }
     catch(const std::exception &e)
     {
@@ -140,6 +143,7 @@ void base_sql_connection::insert_to_table(std::string table_info)
             //TODO: log system error(log sql server error)
             //TODO: subalert system error(send sql server error)
         }
+        exit(EXIT_FAILURE);
     }
     catch(const std::exception &e)
     {
@@ -184,6 +188,7 @@ void base_sql_connection::select_from_table(UCI number_of_table)
             //TODO: log system error(log sql server error)
             //TODO: subalert system error(send sql server error)
         }
+        exit(EXIT_FAILURE);
     }
     catch(const std::exception &e)
     {
@@ -220,6 +225,7 @@ void base_sql_connection::update_table(std::string changing_info, \
             //TODO: log system error(log sql server error)
             //TODO: subalert system error(send sql server error)
         }
+        exit(EXIT_FAILURE);
     }
     catch(const std::exception &e)
     {
@@ -255,6 +261,7 @@ void base_sql_connection::delete_from_table(UCI number_of_table, std::string ID)
             //TODO: log system error(log sql server error)
             //TODO: subalert system error(send sql server error)
         }
+        exit(EXIT_FAILURE);
     }
     catch(const std::exception &e)
     {

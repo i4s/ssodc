@@ -5,8 +5,6 @@
 #include <string>
 #include <pqxx/pqxx> 
 
-//using namespace std;
-//using namespace pqxx;
 
 namespace ssodc {
 namespace database_controller {
@@ -39,7 +37,7 @@ typedef unsigned const int UCI;
 class base_sql_connection 
 {
 protected:
-	std::string db_name;
+    std::string db_name;
     std::string user_name;
     std::string user_password;
     std::string hostaddr;
