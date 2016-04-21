@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa041b7_6dab7bd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1007567
+      },
+      "writtenOn": "2016-04-21T05:48:04Z",
+      "side": 1,
+      "message": "full name",
+      "range": {
+        "startLine": 4,
+        "startChar": 12,
+        "endLine": 4,
+        "endChar": 19
+      },
+      "revId": "0b775c70ce75ac509a47bd5d765495d63ea27f8a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_4dbaf724",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1007567
+      },
+      "writtenOn": "2016-04-21T05:48:04Z",
+      "side": 1,
+      "message": "[UTILS] Cr...",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "0b775c70ce75ac509a47bd5d765495d63ea27f8a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_ad7f4365",
+        "filename": "utils/Daemon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1007567
+      },
+      "writtenOn": "2016-04-21T05:48:04Z",
+      "side": 1,
+      "message": "1. common system libraries\n2. external libraries\n3. your libraries\n\n#include \u003ccstdlib\u003e\n#include \u003csignal.h\u003e\n#include \u003cunistd.h\u003e\n#include \u003csys/stat.h\u003e\n#include \u003csys/types.h\u003e\n\n#include \"Daemon.hpp\"",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 18
+      },
+      "revId": "0b775c70ce75ac509a47bd5d765495d63ea27f8a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_8d97df8f",
+        "filename": "utils/Daemon.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1007567
+      },
+      "writtenOn": "2016-04-21T05:48:04Z",
+      "side": 1,
+      "message": "} /* namespace utils */",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 1
+      },
+      "revId": "0b775c70ce75ac509a47bd5d765495d63ea27f8a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_ada863dc",
+        "filename": "utils/Daemon.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1007567
+      },
+      "writtenOn": "2016-04-21T05:48:04Z",
+      "side": 1,
+      "message": "#pragma once",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "0b775c70ce75ac509a47bd5d765495d63ea27f8a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_cd7cc774",
+        "filename": "utils/Daemon.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1007567
+      },
+      "writtenOn": "2016-04-21T05:48:04Z",
+      "side": 1,
+      "message": "public\nprotected\nprivate",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "0b775c70ce75ac509a47bd5d765495d63ea27f8a",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
