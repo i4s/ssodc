@@ -1,7 +1,9 @@
+#pragma once
+
 #ifdef LOGGING_EXPORTS
-#define LOG_API __declspec(dllexport)
+#define LOG_API  __declspec(dllexport)
 #else
-#define LOG_API __declspec(dllimport)
+#define LOG_API  __declspec(dllimport)
 #endif
 
 #include <stdio.h>
@@ -11,12 +13,13 @@
 #include <sstream>
 #include <stdarg.h>
 #include <time.h>
+#include <Windows.h>
 
 using namespace std;
 
+
 namespace logging_framework
 {
-
 	struct datainf
 	{
 		string LogName;
@@ -25,18 +28,32 @@ namespace logging_framework
 
 	class CLogger
 	{
-
-		datainf dataInf;
-		ofstream outstream;
-
+		 static bool initialise;
+	protected:
+		 static datainf dataInf;
 	public:
-		LOG_API CLogger();
-		LOG_API ~CLogger();
-		LOG_API void ReadLevel();
-		LOG_API void Log(int level, const char* message);
+		LOG_API static void readConfig();
+		LOG_API static void parseConfig(const char *buff);
+		LOG_API static void getValue(string source, string &key, string &value);
+		LOG_API static void log(int line ,const char* message);
 		friend ifstream &operator >> (ifstream &in, datainf &obj);
 	};
+
+	
+
+	class CFiles: public CLogger
+	{
+		ofstream out;
+	public:
+		LOG_API CFiles(string filename);
+		LOG_API ~CFiles();
+		LOG_API void saveToFile(int line, struct tm timeInfo, const char *message);
+		//LOG_API static void readFromFile();
+	};
+
 }
 
-#define NEW_LOG(level, message) CLogger::Log(level, message);
+
+#define NEW_LOG(message) CLogger::log(__LINE__, message);
+
 
