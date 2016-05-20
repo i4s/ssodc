@@ -4,14 +4,14 @@ namespace ssodc {
 namespace utils {
 
 TaskInfo::TaskInfo() : m_id(0),
-    m_type(TaskType::Text), m_datapath(""), m_codepath(""),
-    m_executablepath("") {
+    m_type(TaskType::Text), m_status(TaskStatus::Unknown), m_datapath(""),
+    m_codepath(""), m_executablepath("") {
 }
 
-TaskInfo::TaskInfo(int id, TaskType type, std::string datapath,
+TaskInfo::TaskInfo(int id, TaskType type, TaskStatus status, std::string datapath,
                    std::string codepath, std::string executablepath) : m_id(id),
-    m_type(type), m_datapath(datapath), m_codepath(codepath),
-    m_executablepath(executablepath) {
+    m_type(type), m_status(status), m_datapath(datapath),
+    m_codepath(codepath), m_executablepath(executablepath) {
 }
 
 TaskInfo::~TaskInfo() {
@@ -25,6 +25,10 @@ TaskType TaskInfo::GetType() {
     return m_type;
 }
 
+TaskStatus TaskInfo::GetStatus() {
+	return m_status;
+}
+
 std::string TaskInfo::GetDataPath() {
     return m_datapath;
 }
@@ -35,6 +39,10 @@ std::string TaskInfo::GetCodePath() {
 
 std::string TaskInfo::GetExecutablePath() {
     return m_executablepath;
+}
+
+void TaskInfo::SetStatus(TaskStatus status) {
+	m_status = status;
 }
 
 void TaskInfo::SetExecutablePath(std::string& executablepath) {
