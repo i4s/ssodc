@@ -1,25 +1,51 @@
 #pragma once
 
 #include "Logger.h"
+#include "sys_Mutex.h"
 #include <iostream>
 #include <time.h>
 #include <fstream>
+#include <Windows.h>
+
 
 using namespace std;
-
-
 
 namespace logging_framework
 {
 
 	datainf CLogger::dataInf;
 	bool CLogger::initialise = false;
+	sys::Mutex CLogger::g_mutex;
 
-	ifstream &operator>>(ifstream &in, datainf &obj)
+	LogLevel CLogger::stringTolevel(string level)
 	{
-		in >> obj.level;
-		in >> obj.LogName;
-		return in;
+		if (level == "DEBUG")
+			return logDebug;
+		if (level == "TRACE")
+			return logTrace;
+		if (level == "WARNING")
+			return logWarning;
+		if (level == "ERROR")
+			return logError;
+
+		return logTrace;
+	}
+
+	string CLogger::levelToString(LogLevel level)
+	{
+		switch (level)
+		{
+		case logTrace:
+			return "TRACE";
+		case logDebug:
+			return "DEBUG";
+		case logWarning:
+			return "WARNING";
+		case logError:
+			return "ERROR";
+		default:
+			return "TRACE";
+		}
 	}
 
     void CLogger::readConfig()
@@ -46,8 +72,8 @@ namespace logging_framework
 		{
 			string key, value;
 			getValue(buff, key, value);
-			dataInf.level = 0;
-			istringstream(value) >> dataInf.level;
+			dataInf.level = logTrace;
+			dataInf.level = CLogger::stringTolevel(value);
 		}
 		if (buff.find("filename") < -1)
 		{
@@ -64,8 +90,9 @@ namespace logging_framework
 		value = source.substr(pos + 1);
 	}
 
-	void CLogger::log(int line, const char *message)
+	void CLogger::log(LogLevel level, const char *message)
 	{
+		g_mutex.Lock();
 		if (!initialise) 
 		{
 			readConfig();
@@ -77,7 +104,24 @@ namespace logging_framework
 		timeinfo = localtime(&current_time);
 		string filename = dataInf.LogName;
 		CFiles file(filename);
-		file.saveToFile(line ,*timeinfo, message);
+		file.saveToFile(level, *timeinfo, message);
+		g_mutex.Unlock();
+	}
+
+	void CLogger::log_crit(LogLevel level ,int line, const char *message, const char* location)
+	{
+		if (!initialise)
+		{
+			readConfig();
+			initialise = true;
+		}
+		time_t current_time;
+		struct tm *timeinfo;
+		time(&current_time);
+		timeinfo = localtime(&current_time);
+		string filename = dataInf.LogName;
+		CFiles file(filename);
+		file.saveToFile(level, line, *timeinfo, message, location);
 	}
 
 	CFiles::CFiles(string fileName)
@@ -90,11 +134,22 @@ namespace logging_framework
 		out.close();
 	}
 
-	void CFiles::saveToFile(int line, struct tm timeinfo, const char *message)
+	void CFiles::saveToFile(LogLevel level, struct tm timeinfo, const char *message)
 	{
 		out << timeinfo.tm_mday << "/" << timeinfo.tm_mon << "/" << timeinfo.tm_year + 1900 << " " <<
 		  timeinfo.tm_hour << ":" << timeinfo.tm_min << ":" << timeinfo.tm_sec <<"\t";
-		out << message<< "\t" << line << endl;
+		out<<levelToString(level)<< "\t" << message << endl;
+	}
+
+	void CFiles::saveToFile(LogLevel level, int line, struct tm timeinfo, const char *message, const char *location)
+	{
+		saveToFile(level, timeinfo, message);
+		out << "\t" << location<< "\t" << line << endl;
+	}
+
+	void CLogger::setLevel(string level)
+	{
+
 	}
 }
 
