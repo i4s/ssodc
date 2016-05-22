@@ -12,6 +12,7 @@ namespace ssodc {
 namespace utils {
 
 const std::string DATA = "Data";
+const std::string INFO = "Info";
 const std::string MAP_KEY = "Key";
 const std::string MAP_VALUE = "Value";
 const std::string KEY_TYPE = "KeyType";
@@ -29,26 +30,27 @@ class JSONConverter
 {
 public:
     static int GetRequestType(std::string&);
+    static int CreateRequest(int, std::string&);
     static std::string GetMapKeyType(std::string&);
     static std::string GetMapValueType(std::string&);
-    static int GetTaskRequest(std::string&, ssodc::utils::TaskInfo&);
-
-    static int CreateSimpleRequest(int, std::string&);
-    static int CreateTaskRequest(TaskInfo&, int, std::string&);
+    static int PutTaskInfo(TaskInfo&, std::string&);
+    static int GetTaskInfo(std::string&, ssodc::utils::TaskInfo&);
 
     template <class Key, class Value>
-    static int MapToString(std::map<Key, Value>&, int, std::string&);
+    static int MapToString(std::map<Key, Value>&, std::string&);
     template <class Key, class Value>
     static int StringToMap(std::string&, std::map<Key, Value>&);
     static int StringToMapWithVector(std::string&, std::map<int, std::vector<int>>&);
-    static int MapWithVectorValueToString(std::map<int, std::vector<int>>&,
-                                          int, std::string&);
+    static int MapWithVectorValueToString(std::map<int, std::vector<int>>&, std::string&);
 };
 
 template<class Key, class Value>
-int JSONConverter::MapToString(std::map<Key, Value>& inputMap,
-                               int request, std::string& outputJson) {
+int JSONConverter::MapToString(std::map<Key, Value>& inputMap, std::string& outputJson) {
     Json::Value root;
+    Json::Reader reader;
+    if(!reader.parse(outputJson, root)) {
+        //TODO Logging
+    }
     Json::Value jsonMap;
     typename std::map<Key, Value>::const_iterator it = inputMap.begin();
     typename std::map<Key, Value>::const_iterator end = inputMap.end();
@@ -59,7 +61,6 @@ int JSONConverter::MapToString(std::map<Key, Value>& inputMap,
         currentElement[MAP_VALUE] = it->second;
         jsonMap.append(currentElement);
     }
-    root[REQUEST_TYPE] = request;
     root[KEY_TYPE] = typeid(inputMap.begin()->first).name();
     root[VALUE_TYPE] = typeid(inputMap.begin()->second).name();
     root[DATA] = jsonMap;

@@ -11,13 +11,13 @@ enum TaskType {
 };
 
 enum TaskStatus {
-    Unknown = 0
+    Unknown = 0,
     Waiting,
     Mapping,
     Processing,
     Reducing,
     Finished
-}
+};
 
 class TaskInfo {
 public:
@@ -34,11 +34,12 @@ public:
     std::string GetExecutablePath();
 
     void SetStatus(TaskStatus);
+    void SetDataPath(std::string&);
     void SetExecutablePath(std::string&);
 private:
     int m_id;
     TaskType m_type;
-    TastStatus m_status;
+    TaskStatus m_status;
     std::string m_datapath;
     std::string m_codepath;
     std::string m_executablepath;

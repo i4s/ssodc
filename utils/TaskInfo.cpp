@@ -26,7 +26,7 @@ TaskType TaskInfo::GetType() {
 }
 
 TaskStatus TaskInfo::GetStatus() {
-	return m_status;
+    return m_status;
 }
 
 std::string TaskInfo::GetDataPath() {
@@ -42,7 +42,11 @@ std::string TaskInfo::GetExecutablePath() {
 }
 
 void TaskInfo::SetStatus(TaskStatus status) {
-	m_status = status;
+    m_status = status;
+}
+
+void TaskInfo::SetDataPath(std::string& data) {
+    m_datapath = data;
 }
 
 void TaskInfo::SetExecutablePath(std::string& executablepath) {
