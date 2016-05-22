@@ -45,6 +45,10 @@ void TaskInfo::SetStatus(TaskStatus status) {
 	m_status = status;
 }
 
+void TaskInfo::SetDataPath(std::string& data) {
+    m_datapath = data;
+}
+
 void TaskInfo::SetExecutablePath(std::string& executablepath) {
     m_executablepath = executablepath;
 }

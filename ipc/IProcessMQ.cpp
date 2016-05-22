@@ -48,7 +48,9 @@ int IProcessMQ::Listen(std::function<std::string(std::string)> callback) {
     std::string outgoingMessage;
     Recv(incomingMessage);
     outgoingMessage = callback(incomingMessage);
-    Send(outgoingMessage);
+    if(!outgoingMessage.empty()) {
+    	Send(outgoingMessage);
+    } 
     return 0;
 }
 
