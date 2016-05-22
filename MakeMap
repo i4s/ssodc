@@ -1,0 +1,55 @@
+#compiler
+  CC = g++
+
+#flags
+  CFLAGS = -g -Wall -pedantic -std=c++14
+
+#include
+  IPC = -Iipc
+  UTILS = -Iutils
+  MAPREDUCE = -Imapreduce
+  JSON = -ljsoncpp
+  ZMQ = -lzmq
+  THREAD = -lpthread
+
+default: Main
+
+Main: IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o ReduceUnit.o map.o reduce.o
+	$(CC) $(CFLAGS) IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o map.o utils/Request.hpp -o Map $(ZMQ) $(JSON) $(THREAD)
+	$(CC) $(CFLAGS) IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o ReduceUnit.o reduce.o utils/Request.hpp -o Reduce $(ZMQ) $(JSON) $(THREAD)
+
+IProcessMQ.o: ipc/IProcessMQInterface.hpp ipc/IProcessMQ.hpp ipc/IProcessMQ.cpp
+	$(CC) $(CFLAGS) $(ZMQ) -c ipc/IProcessMQ.cpp
+
+Daemon.o: utils/Daemon.hpp utils/Daemon.cpp
+	$(CC) $(CFLAGS) -c utils/Daemon.cpp
+
+TaskInfo.o: utils/TaskInfo.hpp utils/TaskInfo.cpp
+	$(CC) $(CFLAGS) -c utils/TaskInfo.cpp
+
+JSONConverter.o: utils/JSONConverter.hpp utils/JSONConverter.cpp
+	$(CC) $(CFLAGS) $(JSON) -c utils/JSONConverter.cpp
+
+FileWorker.o: utils/FileWorker.hpp utils/FileWorker.cpp
+	$(CC) $(CFLAGS) -c utils/FileWorker.cpp
+
+TextMapper.o: mapreduce/MapperInterface.hpp mapreduce/TextMapper.hpp mapreduce/TextMapper.cpp
+	$(CC) $(CFLAGS) $(UTILS) -c mapreduce/TextMapper.cpp
+	
+TextReduce.o: mapreduce/ReduceInterface.hpp mapreduce/TextReduce.hpp mapreduce/TextReduce.cpp
+	$(CC) $(CFLAGS) $(UTILS) -c mapreduce/TextReduce.cpp
+
+MapUnit.o: mapreduce/MapUnit.hpp mapreduce/MapUnit.cpp
+	$(CC) $(CFLAGS) $(UTILS) $(IPC) $(JSON) -c mapreduce/MapUnit.cpp
+
+ReduceUnit.o: mapreduce/ReduceUnit.hpp mapreduce/ReduceUnit.cpp
+	$(CC) $(CFLAGS) $(UTILS) $(IPC) $(JSON) -c mapreduce/ReduceUnit.cpp
+
+map.o: map.cpp
+	$(CC) $(CFLAGS) $(IPC) $(UTILS) $(MAPREDUCE) $(JSON) $(ZMQ) -c map.cpp
+
+reduce.o: reduce.cpp
+	$(CC) $(CFLAGS) $(IPC) $(UTILS) $(MAPREDUCE) $(JSON) $(ZMQ) -c reduce.cpp
+
+clean:
+	rm Map Reduce *.o
