@@ -141,10 +141,10 @@ int JSONConverter::GetTaskInfo(std::string& inputJSON, ssodc::utils::TaskInfo& t
     }
     jsonTaskInfo = root[INFO];
     taskInfo = ssodc::utils::TaskInfo(jsonTaskInfo[TI_ID].asInt(),
-            static_cast<ssodc::utils::TaskType>(jsonTaskInfo[TI_TYPE].asInt()),
-            static_cast<ssodc::utils::TaskStatus>(jsonTaskInfo[TI_STATUS].asInt()),
-            jsonTaskInfo[TI_DATA_PATH].asString(), jsonTaskInfo[TI_CODE_PATH].asString(),
-            jsonTaskInfo[TI_EXECUTABLE_PATH].asString());
+                                      static_cast<ssodc::utils::TaskType>(jsonTaskInfo[TI_TYPE].asInt()),
+                                      static_cast<ssodc::utils::TaskStatus>(jsonTaskInfo[TI_STATUS].asInt()),
+                                      jsonTaskInfo[TI_DATA_PATH].asString(), jsonTaskInfo[TI_CODE_PATH].asString(),
+                                      jsonTaskInfo[TI_EXECUTABLE_PATH].asString());
     return 0;
 }
 

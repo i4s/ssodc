@@ -1,6 +1,5 @@
 #pragma once
 
-#include <map>
 #include <list>
 #include <memory>
 #include <string>
@@ -15,10 +14,10 @@
 namespace ssodc {
 namespace mapreduce {
 
-class MapUnit : public ssodc::utils::Daemon {
+class ReduceUnit : public ssodc::utils::Daemon {
 public:
-    MapUnit();
-    ~MapUnit();
+    ReduceUnit();
+    ~ReduceUnit();
 
     int Run();
     int Stop();
@@ -27,8 +26,8 @@ public:
     int FinishWork(ssodc::utils::TaskInfo&);
     std::string MessageHandler(std::string);
     int UpdateTaskInfo(ssodc::utils::TaskInfo&);
-    int SaveMaps(std::map<int, std::string>&, std::map<int, std::vector<int>>&,
-                 ssodc::utils::TaskInfo&);
+    int GetMaps(std::map<int, std::string>&, std::map<int, std::vector<int>>&,
+                ssodc::utils::TaskInfo&);
 private:
     std::thread m_threadListener;
     std::list<ssodc::utils::TaskInfo> m_tasks;

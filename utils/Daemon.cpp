@@ -21,7 +21,7 @@ Daemon::Daemon() {
     sigdelset(&terminateSet, SIGTERM);
     sigprocmask(SIG_SETMASK, &terminateSet, 0);
     terminateAction.sa_handler = &TerminateHandler;
-    sigaction(SIGTERM, &terminateAction, 0);   
+    sigaction(SIGTERM, &terminateAction, 0);
     pid_t pid = fork();
     if (pid != 0) {
         // TODO: Change this stuff, when exception model will be implemented
@@ -37,7 +37,7 @@ Daemon::Daemon() {
     }
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
-    close(STDERR_FILENO); 
+    close(STDERR_FILENO);
 }
 
 Daemon::~Daemon() {

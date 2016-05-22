@@ -8,15 +8,15 @@ namespace ssodc {
 namespace mapreduce {
 
 MapUnit::MapUnit() : ssodc::utils::Daemon() {
-	m_listener = std::unique_ptr<ssodc::ipc::IProcessMQ>(new ssodc::ipc::IProcessMQ("tcp://*:7777"));
-	m_threadListener = std::thread(&MapUnit::PortListener, this);
-	Log("constructor");
+    m_listener = std::unique_ptr<ssodc::ipc::IProcessMQ>(new ssodc::ipc::IProcessMQ("tcp://*:7777"));
+    m_threadListener = std::thread(&MapUnit::PortListener, this);
+    Log("constructor");
 }
 
 MapUnit::~MapUnit() {
-	Log("Destructor");
+    Log("Destructor");
     if(m_threadListener.joinable()) {
-    	m_threadListener.join();
+        m_threadListener.join();
     }
 }
 
@@ -30,14 +30,14 @@ int MapUnit::Run() {
             std::map<int, std::string> partPath;
             std::map<int, std::vector<int>> partReduce;
             switch (taskInfo.GetType()) {
-                case ssodc::utils::TaskType::Text: {
-                    std::string dataPath = taskInfo.GetDataPath();
-                    ssodc::mapreduce::TextMapper textMapper(dataPath);
-                    textMapper.Mapping(4);
-                    partPath = textMapper.GetPartPath();
-                    partReduce = textMapper.GetPartReduce();
-                }
-                break;
+            case ssodc::utils::TaskType::Text: {
+                std::string dataPath = taskInfo.GetDataPath();
+                ssodc::mapreduce::TextMapper textMapper(dataPath);
+                textMapper.Mapping(4);
+                partPath = textMapper.GetPartPath();
+                partReduce = textMapper.GetPartReduce();
+            }
+            break;
             }
             SaveMaps(partPath, partReduce, taskInfo);
             FinishWork(taskInfo);
@@ -45,15 +45,15 @@ int MapUnit::Run() {
         }
         std::chrono::seconds duration(5);
         std::this_thread::sleep_for(duration);
-	}
-	Stop();
-	return 0;
+    }
+    Stop();
+    return 0;
 }
 
 int MapUnit::PortListener() {
     while(!m_terminate) {
         m_listener->Listen(std::bind(&ssodc::mapreduce::MapUnit::MessageHandler,
-            this, std::placeholders::_1));
+                                     this, std::placeholders::_1));
     }
     return 0;
 }
@@ -62,43 +62,43 @@ std::string MapUnit::MessageHandler(std::string inputMessage) {
     Log("MessageHandler:new message");
     int requestType = ssodc::utils::JSONConverter::GetRequestType(inputMessage);
     switch (requestType) {
-    	case ssodc::utils::request::NEW_TASK: {
-            ssodc::utils::TaskInfo taskInfo;
-            ssodc::utils::JSONConverter::GetTaskInfo(inputMessage, taskInfo);
-            m_tasks.push_back(taskInfo);
-            return "All is good, task will be solved";
-    	}
+    case ssodc::utils::request::NEW_TASK: {
+        ssodc::utils::TaskInfo taskInfo;
+        ssodc::utils::JSONConverter::GetTaskInfo(inputMessage, taskInfo);
+        m_tasks.push_back(taskInfo);
+        return "All is good, task will be solved";
+    }
     }
     return "";
 }
 
 void MapUnit::Log(const char* a) {
-	std::ofstream newPart("/home/evgenii/Courser/22.05/ssodc/log.txt", std::ofstream::app);
-    if(newPart.is_open()) {    
+    std::ofstream newPart("/home/evgenii/Courser/22.05/ssodc/log.txt", std::ofstream::app);
+    if(newPart.is_open()) {
         newPart << a << std::endl;
         newPart.close();
     }
 }
 
 int MapUnit::SaveMaps(std::map<int, std::string>& partPath,
-        std::map<int, std::vector<int>>& partReduce, ssodc::utils::TaskInfo& taskInfo) {
+                      std::map<int, std::vector<int>>& partReduce, ssodc::utils::TaskInfo& taskInfo) {
     std::string pathMessage;
     std::string reduceMessage;
     ssodc::utils::JSONConverter::CreateRequest(ssodc::utils::request::SAVE_BASIC_MAP,
-        pathMessage);
+            pathMessage);
     ssodc::utils::JSONConverter::PutTaskInfo(taskInfo, pathMessage);
     ssodc::utils::JSONConverter::MapToString(partPath, pathMessage);
     ssodc::utils::JSONConverter::CreateRequest(ssodc::utils::request::SAVE_VECTOR_MAP,
-        reduceMessage);
+            reduceMessage);
     ssodc::utils::JSONConverter::PutTaskInfo(taskInfo, reduceMessage);
     ssodc::utils::JSONConverter::MapWithVectorValueToString(partReduce, reduceMessage);
     std::ofstream path("/home/evgenii/Courser/22.05/ssodc/partpath.txt", std::ofstream::out);
-    if(path.is_open()) {    
+    if(path.is_open()) {
         path << pathMessage << std::endl;
         path.close();
     }
     std::ofstream reduce("/home/evgenii/Courser/22.05/ssodc/partreduce.txt", std::ofstream::out);
-    if(reduce.is_open()) {    
+    if(reduce.is_open()) {
         reduce << reduceMessage << std::endl;
         reduce.close();
     }
@@ -147,13 +147,13 @@ int MapUnit::FinishWork(ssodc::utils::TaskInfo& taskInfo) {
 
 
 int MapUnit::Stop() {
-	Log("Stop:start");
-	std::string exitMessage;
-	ssodc::utils::JSONConverter::CreateRequest(
+    Log("Stop:start");
+    std::string exitMessage;
+    ssodc::utils::JSONConverter::CreateRequest(
         ssodc::utils::request::CLOSE_CONNECTION, exitMessage);
     ssodc::ipc::IProcessMQ forMyself("tcp://127.0.0.1:7777");
     forMyself.Send(exitMessage);
-	Log("Stop:finished");
+    Log("Stop:finished");
     return 0;
 }
 

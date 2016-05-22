@@ -7,8 +7,8 @@ namespace mapreduce {
 
 class TextMapper : public MapInterface {
     std::string m_filePath;
-	std::map<int, std::string> m_partPath;
-	std::map<int, std::vector<int>> m_partReduce;
+    std::map<int, std::string> m_partPath;
+    std::map<int, std::vector<int>> m_partReduce;
 public:
     TextMapper(std::string&);
     ~TextMapper();
