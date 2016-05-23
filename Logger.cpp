@@ -1,11 +1,16 @@
 #pragma once
 
 #include "Logger.h"
+#include "CFiles.h"
+#include "LogTime.h"
+#include "CConsole.h"
 #include "sys_Mutex.h"
 #include <iostream>
 #include <time.h>
 #include <fstream>
+#ifdef WIN32
 #include <Windows.h>
+#endif
 
 #define DEFAULT_LOG_FILENAME "default_log.txt"
 #define DEFAULT_CONFIG_NAME "configLog.cfg"
@@ -50,12 +55,10 @@ namespace logging_framework
 		}
 	}
 
-
-
     void CLogger::readConfig()
 	{
 		ifstream ins;
-		ins = ifstream(DEFAULT_CONFIG_NAME);
+		ins.open(DEFAULT_CONFIG_NAME);
 		if (!ins)
 		{
 			defaultConfiguration();
@@ -130,27 +133,6 @@ namespace logging_framework
 		g_mutex.Unlock();
 	}
 
-	CFiles::CFiles(string fileName)
-	{
-		out.open(fileName, ios::app);
-	}
-
-	CFiles::~CFiles()
-	{
-		out.close();
-	}
-
-	void CFiles::saveToFile(string information)
-	{
-		out << information << endl;
-	}
-
-	void CConsole::printInConsole(string information)
-	{
-		setlocale(LC_ALL, "Russian");
-		cout << information << endl;
-	}
-
 	void CLogger::setLevel(string level)
 	{
 		if (!initialise)
@@ -160,23 +142,6 @@ namespace logging_framework
 		}
 		LogLevel setLogLevel = stringTolevel(level);
 		dataInf.level = setLogLevel;
-	}
-
-	struct tm* LogTime::getCurrentTime()
-	{
-		time_t current_time;
-		struct tm *timeinfo;
-		time(&current_time);
-		timeinfo = localtime(&current_time);
-		return timeinfo;
-	}
-
-	string LogTime::timeToString(struct tm timeinfo)
-	{
-		std::ostringstream oss;
-		oss << timeinfo.tm_mday << "/" << timeinfo.tm_mon << "/" << timeinfo.tm_year + 1900 << " " <<
-			timeinfo.tm_hour << ":" << timeinfo.tm_min << ":" << timeinfo.tm_sec;
-		return oss.str();
 	}
 
 	string CLogger::preparingInformation(LogLevel level, int line, const char* message, const char* location)
