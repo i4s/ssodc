@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa041b7_9c88bd72",
+        "filename": "CFiles.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "#include \u003cfstream\u003e\n\n#include \"CFiles.h\"\n#include \"Logger.h\"",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_7ca4d906",
+        "filename": "CFiles.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_dc5c051b",
+        "filename": "CFiles.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "if file don\u0027t exist or can\u0027t be created?",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_9ca1ddfa",
+        "filename": "CFiles.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "if file was not open",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_5ca7d50a",
+        "filename": "CFiles.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "std::string",
+      "range": {
+        "startLine": 21,
+        "startChar": 25,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_fcb8e92b",
+        "filename": "CFiles.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "std::cout",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_7c7bb97b",
+        "filename": "LogTime.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "std::unique_ptr",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_dc8ac563",
+        "filename": "Logger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "#include \u003cctime\u003e\n#include \u003ccstdio\u003e\n#include \u003ccstdarg\u003e\n#include \u003cfstream\u003e\n#include \u003ciostream\u003e\n#include \u003csstream\u003e",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_bceca12a",
+        "filename": "Logger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "m_mutex",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_7cf29907",
+        "filename": "Logger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1007669
+      },
+      "writtenOn": "2016-05-23T20:52:48Z",
+      "side": 1,
+      "message": "m_initialise",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "dbb3c6c4ab1eb48ee36f742a9209dc93f493a14b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
