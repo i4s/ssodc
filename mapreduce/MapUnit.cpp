@@ -3,6 +3,7 @@
 
 #include "MapUnit.hpp"
 #include "TextMapper.hpp"
+#include "SourceBuilder.hpp"
 
 namespace ssodc {
 namespace mapreduce {
@@ -39,6 +40,7 @@ int MapUnit::Run() {
             }
             break;
             }
+            BuildSource(taskInfo);
             SaveMaps(partPath, partReduce, taskInfo);
             FinishWork(taskInfo);
             m_tasks.pop_front();
@@ -73,7 +75,7 @@ std::string MapUnit::MessageHandler(std::string inputMessage) {
 }
 
 void MapUnit::Log(const char* a) {
-    std::ofstream newPart("/home/evgenii/Courser/22.05/ssodc/log.txt", std::ofstream::app);
+    std::ofstream newPart("/home/evgenii/Courser/22.05V2/ssodc/log.txt", std::ofstream::app);
     if(newPart.is_open()) {
         newPart << a << std::endl;
         newPart.close();
@@ -154,6 +156,19 @@ int MapUnit::Stop() {
     ssodc::ipc::IProcessMQ forMyself("tcp://127.0.0.1:7777");
     forMyself.Send(exitMessage);
     Log("Stop:finished");
+    return 0;
+}
+
+int MapUnit::BuildSource(ssodc::utils::TaskInfo& taskInfo) {
+    Log("BuildSource:start");
+    std::string inputFileName = taskInfo.GetCodePath();
+    std::string outputFileName("mnt/ssodcdata/");
+    outputFileName.append(std::to_string(taskInfo.GetId()));
+    outputFileName.append("-executable");
+    Log(outputFileName.c_str());
+    ssodc::utils::SourceBuilder::Build(inputFileName, outputFileName);
+    taskInfo.SetExecutablePath(outputFileName);
+    Log("BuildSource:finished");
     return 0;
 }
 

@@ -14,9 +14,9 @@
 
 default: Main
 
-Main: IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o ReduceUnit.o map.o reduce.o
-	$(CC) $(CFLAGS) IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o map.o utils/Request.hpp -o Map $(ZMQ) $(JSON) $(THREAD)
-	$(CC) $(CFLAGS) IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o ReduceUnit.o reduce.o utils/Request.hpp -o Reduce $(ZMQ) $(JSON) $(THREAD)
+Main: IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o ReduceUnit.o SourceBuilder.o map.o reduce.o
+	$(CC) $(CFLAGS) IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o map.o SourceBuilder.o utils/Request.hpp -o Map $(ZMQ) $(JSON) $(THREAD) $(UTILS)
+	$(CC) $(CFLAGS) IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o ReduceUnit.o reduce.o SourceBuilder.o utils/Request.hpp -o Reduce $(ZMQ) $(JSON) $(THREAD)
 
 IProcessMQ.o: ipc/IProcessMQInterface.hpp ipc/IProcessMQ.hpp ipc/IProcessMQ.cpp
 	$(CC) $(CFLAGS) $(ZMQ) -c ipc/IProcessMQ.cpp
@@ -29,6 +29,9 @@ TaskInfo.o: utils/TaskInfo.hpp utils/TaskInfo.cpp
 
 JSONConverter.o: utils/JSONConverter.hpp utils/JSONConverter.cpp
 	$(CC) $(CFLAGS) $(JSON) -c utils/JSONConverter.cpp
+
+SourceBuilder.o: utils/SourceBuilder.hpp utils/SourceBuilder.cpp
+	$(CC) $(CFLAGS) -c utils/SourceBuilder.cpp
 
 FileWorker.o: utils/FileWorker.hpp utils/FileWorker.cpp
 	$(CC) $(CFLAGS) -c utils/FileWorker.cpp
