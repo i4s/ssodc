@@ -26,6 +26,7 @@ public:
     int PortListener();
     int FinishWork(ssodc::utils::TaskInfo&);
     std::string MessageHandler(std::string);
+    int BuildSource(ssodc::utils::TaskInfo&);
     int UpdateTaskInfo(ssodc::utils::TaskInfo&);
     int SaveMaps(std::map<int, std::string>&, std::map<int, std::vector<int>>&,
                  ssodc::utils::TaskInfo&);

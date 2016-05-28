@@ -37,6 +37,7 @@ int TextMapper::Mapping(int numberOfParts) {
         for(u_int64_t j = 0; j < partLenght; j++) {
             char symbol;
             fileToMap >> symbol;
+            symbol++; //Delete this fix
             newPart << symbol;
         }
         newPart.close();
@@ -55,6 +56,7 @@ int TextMapper::Mapping(int numberOfParts) {
     for(u_int64_t j = 0; j < (partLenght + fileLenght - partLenght * numberOfParts); j++) {
         char symbol;
         fileToMap >> symbol;
+        symbol++;  //Delete this fix
         newPart << symbol;
     }
     std::vector<int> coordinate;
