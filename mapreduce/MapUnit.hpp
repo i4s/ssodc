@@ -28,8 +28,7 @@ public:
     std::string MessageHandler(std::string);
     int BuildSource(ssodc::utils::TaskInfo&);
     int UpdateTaskInfo(ssodc::utils::TaskInfo&);
-    int SaveMaps(std::map<int, std::string>&, std::map<int, std::vector<int>>&,
-                 ssodc::utils::TaskInfo&);
+    int SaveMaps(std::map<int, std::string>&, ssodc::utils::TaskInfo&);
 private:
     std::thread m_threadListener;
     std::list<ssodc::utils::TaskInfo> m_tasks;
