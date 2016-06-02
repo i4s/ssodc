@@ -7,10 +7,10 @@
 namespace ssodc {
 namespace mapreduce {
 
-class TextReduce : public ReduceInterface {
+class ImageReduce : public ReduceInterface {
 public:
-    TextReduce(std::map<int, std::string>&);
-    ~TextReduce();
+    ImageReduce(std::map<int, std::string>&);
+    ~ImageReduce();
 
     int Reducing();
     std::string GetProcessedData();

@@ -44,8 +44,6 @@ int TextMapper::Mapping(int numberOfParts) {
         std::vector<int> coordinate;
         coordinate.push_back(i + 1);
         m_partPath.insert(std::pair<int, std::string>(i + 1, partFileName));
-        m_partReduce.insert(std::pair<int, std::vector<int>>(i + 1, coordinate));
-        m_partReduce[i + 1].push_back(i + 1);
     }
     std::string fileName = ssodc::utils::FileWorker::GenerateFileName(numberOfParts);
     std::ofstream newPart(fileName.c_str(), std::ofstream::out);
@@ -62,8 +60,6 @@ int TextMapper::Mapping(int numberOfParts) {
     std::vector<int> coordinate;
     coordinate.push_back(numberOfParts);
     m_partPath.insert(std::pair<int, std::string>(numberOfParts, fileName));
-    m_partReduce.insert(std::pair<int, std::vector<int>>(numberOfParts, coordinate));
-    m_partReduce[numberOfParts].push_back(numberOfParts);
     fileToMap.close();
     newPart.close();
     return 0;
@@ -71,10 +67,6 @@ int TextMapper::Mapping(int numberOfParts) {
 
 std::map<int, std::string> TextMapper::GetPartPath() {
     return m_partPath;
-}
-
-std::map<int, std::vector<int>> TextMapper::GetPartReduce() {
-    return m_partReduce;
 }
 
 } /* namespace mapreduce */

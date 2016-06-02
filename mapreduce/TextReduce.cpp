@@ -9,9 +9,8 @@
 namespace ssodc {
 namespace mapreduce {
 
-TextReduce::TextReduce(std::map<int, std::string>& path,
-                       std::map<int, std::vector<int>>& coordinates) : m_partPath(path),
-    m_partReduce(coordinates), m_processedData("") {
+TextReduce::TextReduce(std::map<int, std::string>& path) : m_partPath(path) {
+    m_processedData = "";
 }
 
 TextReduce::~TextReduce() {
@@ -24,9 +23,8 @@ int TextReduce::Reducing() {
         //TODO ERR
         return -1;
     }
-    auto coordinates = m_partReduce.begin();
     for (auto path = m_partPath.begin(); path != m_partPath.end();
-            path++, coordinates++) {
+            path++) {
         u_int64_t fileLength = ssodc::utils::FileWorker::FileLenght(path->second);
         std::ifstream inputPartFile(path->second, std::ifstream::in);
         if(!inputPartFile.is_open()) {
