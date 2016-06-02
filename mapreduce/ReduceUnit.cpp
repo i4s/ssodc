@@ -6,6 +6,7 @@
 
 #include "ReduceUnit.hpp"
 #include "TextReduce.hpp"
+#include "ImageReduce.hpp"
 #include "JSONConverter.hpp"
 
 namespace ssodc {
@@ -33,13 +34,19 @@ int ReduceUnit::Run() {
             taskInfo.SetStatus(ssodc::utils::TaskStatus::Mapping);
             //UpdateTaskInfo(taskInfo);
             std::map<int, std::string> partPath;
-            std::map<int, std::vector<int>> partReduce;
-            GetMaps(partPath, partReduce, taskInfo);
+            GetMaps(partPath, taskInfo);
             switch (taskInfo.GetType()) {
             case ssodc::utils::TaskType::Text: {
-                ssodc::mapreduce::TextReduce textReduce(partPath, partReduce);
+                ssodc::mapreduce::TextReduce textReduce(partPath);
                 textReduce.Reducing();
                 std::string outputFile = textReduce.GetProcessedData();
+                taskInfo.SetDataPath(outputFile);
+            }
+            break;
+            case ssodc::utils::TaskType::Image: {
+                ssodc::mapreduce::ImageReduce imageReduce(partPath);
+                imageReduce.Reducing();
+                std::string outputFile = imageReduce.GetProcessedData();
                 taskInfo.SetDataPath(outputFile);
             }
             break;
@@ -78,18 +85,16 @@ std::string ReduceUnit::MessageHandler(std::string inputMessage) {
 }
 
 void ReduceUnit::Log(const char* a) {
-    std::ofstream newPart("/home/evgenii/Courser/22.05/ssodc/logreduce.txt", std::ofstream::app);
+    std::ofstream newPart("/home/evgenii/Courser/22.05V2/ssodc/logreduce.txt", std::ofstream::app);
     if(newPart.is_open()) {
         newPart << a << std::endl;
         newPart.close();
     }
 }
 
-int ReduceUnit::GetMaps(std::map<int, std::string>& partPath,
-                        std::map<int, std::vector<int>>& partReduce, ssodc::utils::TaskInfo& taskInfo) {
+int ReduceUnit::GetMaps(std::map<int, std::string>& partPath, ssodc::utils::TaskInfo& taskInfo) {
     std::string pathMessage;
-    std::string reduceMessage;
-    std::ifstream path("/home/evgenii/Courser/22.05/ssodc/partpath.txt", std::ios::binary);
+    std::ifstream path("/home/evgenii/Courser/22.05V2/ssodc/partpath.txt", std::ios::binary);
     if(path.is_open()) {
         path.seekg( 0, std::ios_base::end);
         std::ifstream::pos_type len = path.tellg();
@@ -98,40 +103,21 @@ int ReduceUnit::GetMaps(std::map<int, std::string>& partPath,
         path.read((char*)pathMessage.data(), len);
         path.close();
     }
-    std::ifstream reduce("/home/evgenii/Courser/22.05/ssodc/partreduce.txt", std::ios::binary);
-    if(reduce.is_open()) {
-        reduce.seekg( 0, std::ios_base::end);
-        std::ifstream::pos_type len = reduce.tellg();
-        reduce.seekg(0);
-        reduceMessage.resize(len);
-        reduce.read((char*)reduceMessage.data(), len);
-        reduce.close();
-    }
     ssodc::utils::JSONConverter::StringToMap(pathMessage, partPath);
-    ssodc::utils::JSONConverter::StringToMapWithVector(reduceMessage, partReduce);
     return 0;
 }
 
 /*
-int ReduceUnit::GetMaps(std::map<int, std::string>& partPath,
-        std::map<int, std::vector<int>>& partReduce, ssodc::utils::TaskInfo& taskInfo) {
+int ReduceUnit::GetMaps(std::map<int, std::string>& partPath, ssodc::utils::TaskInfo& taskInfo) {
     std::string pathMessage;
-    std::string reduceMessage;
     std::string inputPartPath;
-    std::string inputPartReduce;
     ssodc::ipc::IProcessMQ database("tcp://127.0.0.1:7778");
     ssodc::utils::JSONConverter::CreateRequest(ssodc::utils::request::GET_BASIC_MAP,
         pathMessage);
     ssodc::utils::JSONConverter::PutTaskInfo(taskInfo, pathMessage);
     database.Send(pathMessage);
     database.Recv(inputPartPath);
-    ssodc::utils::JSONConverter::CreateRequest(ssodc::utils::request::GET_VECTOR_MAP,
-        reduceMessage);
-    ssodc::utils::JSONConverter::PutTaskInfo(taskInfo, reduceMessage);
-    database.Send(reduceMessage);
-    database.Recv(inputPartReduce);
     ssodc::utils::JSONConverter::StringToMap(inputPartPath, partPath);
-    ssodc::utils::JSONConverter::StringToMapWithVector(inputPartReduce, partReduce);
     return 0;
 }*/
 
