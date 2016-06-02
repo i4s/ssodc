@@ -26,8 +26,7 @@ public:
     int FinishWork(ssodc::utils::TaskInfo&);
     std::string MessageHandler(std::string);
     int UpdateTaskInfo(ssodc::utils::TaskInfo&);
-    int GetMaps(std::map<int, std::string>&, std::map<int, std::vector<int>>&,
-                ssodc::utils::TaskInfo&);
+    int GetMaps(std::map<int, std::string>&, ssodc::utils::TaskInfo&);
 private:
     std::thread m_threadListener;
     std::list<ssodc::utils::TaskInfo> m_tasks;

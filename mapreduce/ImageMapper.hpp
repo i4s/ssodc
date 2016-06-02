@@ -5,12 +5,12 @@
 namespace ssodc {
 namespace mapreduce {
 
-class TextMapper : public MapInterface {
+class ImageMapper : public MapInterface {
     std::string m_filePath;
     std::map<int, std::string> m_partPath;
 public:
-    TextMapper(std::string&);
-    ~TextMapper();
+    ImageMapper(std::string&);
+    ~ImageMapper();
 
     int Mapping(int);
     std::map<int, std::string> GetPartPath();

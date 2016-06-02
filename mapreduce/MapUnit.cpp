@@ -3,6 +3,7 @@
 
 #include "MapUnit.hpp"
 #include "TextMapper.hpp"
+#include "ImageMapper.hpp"
 #include "SourceBuilder.hpp"
 
 namespace ssodc {
@@ -29,19 +30,24 @@ int MapUnit::Run() {
             ssodc::utils::TaskInfo taskInfo = m_tasks.front();
             //UpdateTaskInfo(taskInfo);
             std::map<int, std::string> partPath;
-            std::map<int, std::vector<int>> partReduce;
             switch (taskInfo.GetType()) {
             case ssodc::utils::TaskType::Text: {
                 std::string dataPath = taskInfo.GetDataPath();
                 ssodc::mapreduce::TextMapper textMapper(dataPath);
                 textMapper.Mapping(4);
                 partPath = textMapper.GetPartPath();
-                partReduce = textMapper.GetPartReduce();
+            }
+            break;
+            case ssodc::utils::TaskType::Image: {
+                std::string dataPath = taskInfo.GetDataPath();
+                ssodc::mapreduce::ImageMapper imageMapper(dataPath);
+                imageMapper.Mapping(4);
+                partPath = imageMapper.GetPartPath();
             }
             break;
             }
             BuildSource(taskInfo);
-            SaveMaps(partPath, partReduce, taskInfo);
+            SaveMaps(partPath, taskInfo);
             FinishWork(taskInfo);
             m_tasks.pop_front();
         }
@@ -82,47 +88,30 @@ void MapUnit::Log(const char* a) {
     }
 }
 
-int MapUnit::SaveMaps(std::map<int, std::string>& partPath,
-                      std::map<int, std::vector<int>>& partReduce, ssodc::utils::TaskInfo& taskInfo) {
+int MapUnit::SaveMaps(std::map<int, std::string>& partPath, ssodc::utils::TaskInfo& taskInfo) {
     std::string pathMessage;
-    std::string reduceMessage;
     ssodc::utils::JSONConverter::CreateRequest(ssodc::utils::request::SAVE_BASIC_MAP,
             pathMessage);
     ssodc::utils::JSONConverter::PutTaskInfo(taskInfo, pathMessage);
     ssodc::utils::JSONConverter::MapToString(partPath, pathMessage);
-    ssodc::utils::JSONConverter::CreateRequest(ssodc::utils::request::SAVE_VECTOR_MAP,
-            reduceMessage);
-    ssodc::utils::JSONConverter::PutTaskInfo(taskInfo, reduceMessage);
-    ssodc::utils::JSONConverter::MapWithVectorValueToString(partReduce, reduceMessage);
-    std::ofstream path("/home/evgenii/Courser/22.05/ssodc/partpath.txt", std::ofstream::out);
+    std::ofstream path("/home/evgenii/Courser/22.05V2/ssodc/partpath.txt", std::ofstream::out);
     if(path.is_open()) {
         path << pathMessage << std::endl;
         path.close();
-    }
-    std::ofstream reduce("/home/evgenii/Courser/22.05/ssodc/partreduce.txt", std::ofstream::out);
-    if(reduce.is_open()) {
-        reduce << reduceMessage << std::endl;
-        reduce.close();
     }
     return 0;
 }
 
 /*
-int MapUnit::SaveMaps(std::map<int, std::string>& partPath,
-        std::map<int, std::vector<int>>& partReduce, ssodc::utils::TaskInfo& taskInfo) {
+int MapUnit::SaveMaps(std::map<int, std::string>& partPath, ssodc::utils::TaskInfo& taskInfo) {
     std::string pathMessage;
     std::string reduceMessage;
     ssodc::utils::JSONConverter::CreateRequest(ssodc::utils::request::SAVE_BASIC_MAP,
         pathMessage);
     ssodc::utils::JSONConverter::PutTaskInfo(taskInfo, pathMessage);
     ssodc::utils::JSONConverter::MapToString(partPath, pathMessage);
-    ssodc::utils::JSONConverter::CreateRequest(ssodc::utils::request::SAVE_VECTOR_MAP,
-        reduceMessage);
-    ssodc::utils::JSONConverter::PutTaskInfo(taskInfo, reduceMessage);
-    ssodc::utils::JSONConverter::MapWithVectorValueToString(partReduce, reduceMessage);
     ssodc::ipc::IProcessMQ database("tcp://127.0.0.1:7778");
     database.Send(pathMessage);
-    database.Send(reduceMessage);
     return 0;
 }*/
 
@@ -162,12 +151,14 @@ int MapUnit::Stop() {
 int MapUnit::BuildSource(ssodc::utils::TaskInfo& taskInfo) {
     Log("BuildSource:start");
     std::string inputFileName = taskInfo.GetCodePath();
-    std::string outputFileName("mnt/ssodcdata/");
-    outputFileName.append(std::to_string(taskInfo.GetId()));
-    outputFileName.append("-executable");
-    Log(outputFileName.c_str());
-    ssodc::utils::SourceBuilder::Build(inputFileName, outputFileName);
-    taskInfo.SetExecutablePath(outputFileName);
+    if(!inputFileName.empty()) {
+        std::string outputFileName("mnt/ssodcdata/");
+        outputFileName.append(std::to_string(taskInfo.GetId()));
+        outputFileName.append("-executable");
+        Log(outputFileName.c_str());
+        ssodc::utils::SourceBuilder::Build(inputFileName, outputFileName);
+        taskInfo.SetExecutablePath(outputFileName);
+    }
     Log("BuildSource:finished");
     return 0;
 }
