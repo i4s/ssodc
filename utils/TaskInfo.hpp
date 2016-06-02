@@ -7,7 +7,7 @@ namespace utils {
 
 enum TaskType {
     Text = 1,
-    BitMap
+    Image
 };
 
 enum TaskStatus {

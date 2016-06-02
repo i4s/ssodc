@@ -5,7 +5,7 @@ namespace utils {
 class Daemon {
 public:
     Daemon();
-    ~Daemon();
+    virtual ~Daemon();
     virtual int Run() = 0;
     int Start();
 

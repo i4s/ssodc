@@ -40,8 +40,6 @@ public:
     static int MapToString(std::map<Key, Value>&, std::string&);
     template <class Key, class Value>
     static int StringToMap(std::string&, std::map<Key, Value>&);
-    static int StringToMapWithVector(std::string&, std::map<int, std::vector<int>>&);
-    static int MapWithVectorValueToString(std::map<int, std::vector<int>>&, std::string&);
 };
 
 template<class Key, class Value>
