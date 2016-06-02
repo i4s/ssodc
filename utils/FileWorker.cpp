@@ -16,24 +16,25 @@ u_int64_t FileWorker::FileLenght(std::string& fileName) {
         textFile.close();
     }
     else {
-        //TODO Errors
+        //TODO Errors 
     }
     return fileLenght;
 }
 
-std::string FileWorker::GenerateFileName() {
+std::string FileWorker::GenerateFileName(std::string extansion) {
     std::time_t current = std::time(nullptr);
     std::string fileName(DIRECTORY_TO_SAVE);
     fileName.append(std::ctime(&current));
     std::replace(fileName.begin(), fileName.end(), ' ', '-');
-    fileName.insert(fileName.length() - 1, TXT_FILE_EXTENSION);
+    fileName.append(extansion);
+    //fileName.insert(fileName.length() - 1, extansion);
     return fileName;
 }
 
-std::string FileWorker::GenerateFileName(int id) {
+std::string FileWorker::GenerateFileName(int id, std::string extansion) {
     std::string fileName(DIRECTORY_TO_SAVE);
     fileName.append(std::to_string(id));
-    fileName.append(TXT_FILE_EXTENSION);
+    fileName.append(extansion);
     return fileName;
 }
 
