@@ -16,7 +16,7 @@ u_int64_t FileWorker::FileLenght(std::string& fileName) {
         textFile.close();
     }
     else {
-        //TODO Errors 
+        //TODO Errors
     }
     return fileLenght;
 }

@@ -10,9 +10,11 @@ const int BUFFER_SIZE = 1000;
 
 class SourceBuilder {
 public:
-    static int Build(std::string&, std::string&);
+    static int BuildLinux(std::string&, std::string&);
+    static int BuildWin(std::string&, std::string&);
 private:
-    static std::string GenerateCommand(std::string&, std::string&);
+    static std::string GenerateCommandLinux(std::string&, std::string&);
+    static std::string GenerateCommandWin(std::string&, std::string&);
 };
 } /* namespace utils */
 } /* namespace ssodc */
