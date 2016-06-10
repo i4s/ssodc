@@ -15,8 +15,8 @@
 
 default: Main
 
-Main: IProcessMQ.o ImageMapper.o ImageReduce.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o ReduceUnit.o SourceBuilder.o map.o
-	$(CC) $(CFLAGS) IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o map.o ImageMapper.o ImageReduce.o SourceBuilder.o utils/Request.hpp -o Map $(ZMQ) $(JSON) $(THREAD) $(UTILS) $(X11)
+Main: IProcessMQ.o ImageMapper.o ImageReduce.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o ReduceUnit.o SourceBuilder.o reduce.o
+	$(CC) $(CFLAGS) IProcessMQ.o Daemon.o TaskInfo.o JSONConverter.o FileWorker.o TextMapper.o TextReduce.o MapUnit.o ReduceUnit.o ImageMapper.o ImageReduce.o reduce.o SourceBuilder.o utils/Request.hpp -o Reduce $(ZMQ) $(JSON) $(THREAD) $(X11)
 
 IProcessMQ.o: ipc/IProcessMQInterface.hpp ipc/IProcessMQ.hpp ipc/IProcessMQ.cpp
 	$(CC) $(CFLAGS) $(ZMQ) -c ipc/IProcessMQ.cpp
@@ -37,7 +37,7 @@ FileWorker.o: utils/FileWorker.hpp utils/FileWorker.cpp
 	$(CC) $(CFLAGS) -c utils/FileWorker.cpp
 
 ImageMapper.o: mapreduce/ImageMapper.hpp mapreduce/ImageMapper.cpp
-	$(CC) $(CFLAGS) $(UTILS) -c mapreduce/ImageMapper.cpp $(THREAD)  $(X11)
+	$(CC) $(CFLAGS) $(UTILS) alert/ASInterface.hpp -c mapreduce/ImageMapper.cpp $(THREAD)  $(X11)
 	
 ImageReduce.o: 	mapreduce/ImageReduce.hpp mapreduce/ImageReduce.cpp
 	$(CC) $(CFLAGS) $(UTILS) -c mapreduce/ImageReduce.cpp $(THREAD)  $(X11)
@@ -54,8 +54,8 @@ MapUnit.o: mapreduce/MapUnit.hpp mapreduce/MapUnit.cpp
 ReduceUnit.o: mapreduce/ReduceUnit.hpp mapreduce/ReduceUnit.cpp
 	$(CC) $(CFLAGS) $(UTILS) $(IPC) $(JSON) -c mapreduce/ReduceUnit.cpp
 
-map.o: map.cpp
-	$(CC) $(CFLAGS) $(IPC) $(UTILS) $(MAPREDUCE) $(JSON) $(ZMQ) -c map.cpp
+reduce.o: reduce.cpp
+	$(CC) $(CFLAGS) $(IPC) $(UTILS) $(MAPREDUCE) $(JSON) $(ZMQ) -c reduce.cpp
 
 clean:
-	rm Map *.o
+	rm Reduce *.o
